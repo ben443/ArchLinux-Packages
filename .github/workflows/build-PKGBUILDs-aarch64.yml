@@ -110,6 +110,7 @@ jobs:
     name: Create Repository
     runs-on: ubuntu-22.04-arm
     needs: build-packages
+    container: danhunsaker/archlinuxarm
     steps:
     - name: Download all artifacts
       uses: actions/download-artifact@v4
@@ -119,6 +120,7 @@ jobs:
     - name: Setup repository directory
       run: |
         mkdir -p ${{ env.REPO_DIR }}
+        pacman -Syyu --noconfirm  --ask=4 arch-install-scripts cloud-guest-utils sudo binutils fakeroot base-devel git bc distcc ccache libqmi protobuf-c glib2
         find ${{ env.BUILD_DIR }} -name '*.pkg.tar.*' -exec cp {} ${{ env.REPO_DIR }} \;
         find ${{ env.BUILD_DIR }} -name '*.sig' -exec cp {} ${{ env.REPO_DIR }} \;
 
@@ -135,9 +137,14 @@ jobs:
         name: ${{ env.REPO_NAME }}
         path: ${{ env.REPO_DIR }}/*
 
-    # - name: Deploy to GitHub Pages
-    #   if: github.ref == 'refs/heads/main'
-    #   uses: peaceiris/actions-gh-pages@v3
+    # - name: create release
+    #   uses: softprops/action-gh-release@v2
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     #   with:
-    #     github_token: ${{ secrets.GITHUB_TOKEN }}
-    #     publish_dir: ${{ env.REPO_DIR }}
+    #     body: ${{ env.RELEASE }}
+    #     tag_name: ${{ env.RELEASE }}
+    #     draft: false
+    #     prerelease: false
+    #     files: |
+    #       ${{ env.REPO_DIR }}
