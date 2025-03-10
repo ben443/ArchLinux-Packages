@@ -41,10 +41,10 @@ pkgbuilds:
   #  branch: main
   #  subtree: /
   # Snapdragon sm8250 kernel
-  # linux-sm8250:
-  #   url: GH/silime/ArchLinux-Packages
-  #   branch: main
-  #   subtree: /
+   linux-sm8250:
+     url: GH/silime/ArchLinux-Packages
+     branch: main
+     subtree: /
   # Configure MAC addresses at boot for ath11k
   mkbootimg:
     url: GH/silime/ArchLinux-Packages
@@ -62,7 +62,7 @@ pkgbuilds:
     url: GH/silime/ArchLinux-Packages
     branch: main
     subtree: /
-  soc-qcom-sdm845:
+  soc-qcom-sm8250:
     url: GH/silime/ArchLinux-Packages
     branch: main
     subtree: /
